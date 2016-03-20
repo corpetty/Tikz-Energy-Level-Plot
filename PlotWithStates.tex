@@ -1,0 +1,159 @@
+\documentclass[tikz, border=10pt]{standalone}
+
+\usepackage{pgfplots, tikz}
+\usepackage{filecontents,datatool}
+\usetikzlibrary[pgfplots.groupplots]
+
+\pgfplotsset{compat=newest}
+
+\DTLloaddb[noheader=false]{States}{ConvergedStates.txt}
+\DTLloaddb[noheader=false]{J1States}{J1ConvergedStates.txt}
+\DTLloaddb[noheader=false]{J2States}{J2ConvergedStates.txt}
+
+\begin{document}
+
+\begin{tikzpicture}
+	\centering
+	\begin{groupplot}[
+		group style = {
+			rows=1, columns=1,
+			xlabels at=edge bottom,
+			ylabels at=edge left,
+			vertical sep=1.25cm,
+			group name=plots,
+			},
+		title={Ne$_4$ Energy Levels for $J=0-2$},
+%		ymin=-3.5, ymax=0,
+		every outer x axis line/.append style={
+			ultra thick,
+			},		
+		tick style={white, ultra thick},
+%		ytick={-6,-5,...,-1},
+		width=16cm,height=12cm,
+		]
+		\nextgroupplot[
+			xmin=0.5, xmax=6.5,
+%			restrict y to domain=0:0.1,
+			ylabel={$E, \epsilon$},
+			xlabel={Symmetry},  
+			ymin=-3.6, ymax=-2.2,
+			xticklabels={,,$A_{gg}^+$,, $A_{gg}^-$,, $A_{uu}^+$,, $A_{uu}^-$,, $A_{gu}^+$,,$ A_{gu}^-$,}
+			]
+			\addplot [blue, thin, dotted, domain=0.001:7]				{-3.44907609170750};
+			\addplot [blue, thin, dotted, domain=0.001:7]				{-1.712};
+			\node[black, above] at (axis cs:0.7,-3.6){\large{0}};
+			\DTLforeach*{States}{\i=Agg+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\addplot[black, ultra thin, domain=0.6:0.8]{\i}; 
+			}
+			\node[black, above] at (axis cs:1,-3.6){\large{1}};
+			\DTLforeach*{J1States}{\i=Agg+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\addplot[black, ultra thin, domain=0.9:1.1]{\i}; 
+			}
+			\node[black, above] at (axis cs:1.3,-3.6){\large{2}};
+			\DTLforeach*{J2States}{\i=Agg+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\addplot[black, ultra thin, domain=1.2:1.4]{\i}; 
+			}			
+			\addplot[black, samples=50, smooth, thick] coordinates {(1.5,-3.6)(1.5,-1.5)};
+			\node[black, above] at (axis cs:1.7,-3.6){\large{0}};
+			\DTLforeach*{States}{\i=Agg-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=1.6:1.8]{\i}; 
+			}
+			\node[black, above] at (axis cs:2,-3.6){\large{1}};
+			\DTLforeach*{J1States}{\i=Agg-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=1.9:2.1]{\i}; 
+			}
+			\node[black, above] at (axis cs:2.3,-3.6){\large{2}};
+			\DTLforeach*{J2States}{\i=Agg-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=2.2:2.4]{\i}; 
+			}
+			\addplot[black, samples=50, smooth, thick] coordinates {(2.5,-3.6)(2.5,-1.5)};
+			\node[black, above] at (axis cs:2.7,-3.6){\large{0}};
+			\DTLforeach*{States}{\i=Auu+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=2.6:2.8]{\i}; 
+			}
+			\node[black, above] at (axis cs:3,-3.6){\large{1}};
+			\DTLforeach*{J1States}{\i=Auu+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=2.9:3.1]{\i}; 
+			}
+			\node[black, above] at (axis cs:3.3,-3.6){\large{2}};
+			\DTLforeach*{J2States}{\i=Auu+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=3.2:3.4]{\i}; 
+			}
+			\addplot[black, samples=50, smooth, thick] coordinates {(3.5,-3.6)(3.5,-1.5)};
+			\node[black, above] at (axis cs:3.7,-3.6){\large{0}};
+			\DTLforeach*{States}{\i=Auu-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=3.6:3.8]{\i}; 
+			}
+			\node[black, above] at (axis cs:4,-3.6){\large{1}};
+			\DTLforeach*{J1States}{\i=Auu-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=3.9:4.1]{\i}; 
+			}
+			\node[black, above] at (axis cs:4.3,-3.6){\large{2}};
+			\DTLforeach*{J2States}{\i=Auu-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=4.2:4.4]{\i}; 
+			}
+			\addplot[black, samples=50, smooth, thick] coordinates {(4.5,-3.6)(4.5,-1.5)};
+			\node[black, above] at (axis cs:4.7,-3.6){\large{0}};
+			\DTLforeach*{States}{\i=Agu+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=4.6:4.8]{\i}; 
+			}
+			\node[black, above] at (axis cs:5,-3.6){\large{1}};
+			\DTLforeach*{J1States}{\i=Agu+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=4.9:5.1]{\i}; 
+			}
+			\node[black, above] at (axis cs:5.3,-3.6){\large{2}};
+			\DTLforeach*{J2States}{\i=Agu+}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=5.2:5.4]{\i}; 
+			}
+			\addplot[black, samples=50, smooth, thick] coordinates {(5.5,-3.6)(5.5,-1.5)};
+			\node[black, above] at (axis cs:5.7,-3.6){\large{0}};
+			\DTLforeach*{States}{\i=Agu-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=5.6:5.8]{\i}; 
+			}
+			\node[black, above] at (axis cs:6,-3.6){\large{1}};
+			\DTLforeach*{J1States}{\i=Agu-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=5.9:6.1]{\i}; 
+			}
+			\node[black, above] at (axis cs:6.3,-3.6){\large{2}};
+			\DTLforeach*{J2States}{\i=Agu-}{
+				\ifdefempty{\i}{\def\i{0}}
+				\DTLifnull{\i}{\def\i{0}}{}
+				\addplot[black, ultra thin, domain=6.2:6.4]{\i}; 
+			}
+	\end{groupplot}			
+\end{tikzpicture}
+	
+
+
+\end{document}
